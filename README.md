@@ -13,7 +13,7 @@ Python war game server
 
 ## API
 
-- `/imalive/` POST (name: 'w')
+- `/imalive/` POST (name: 'w', direction: 'u')
 - `/point/<direction>` POST
 - `/goto/<direction>` POST
 - `/junp/<direction>` POST

@@ -272,9 +272,10 @@ def im_alive():
 
     x = random.randrange(mx)
     y = random.randrange(my)
-    players[request.remote_addr] = {'name': request.POST.get('name'),
-                                    "matrix": [x, y, 'u'],
-                                    "life": True}
+    players[request.remote_addr] = {
+        'name': request.POST.get('name'),
+        "matrix": [x, y, request.POST.get('direction', 'u')],
+        "life": True}
 
     matrix = _matrix()
     pprint.pprint(matrix)
