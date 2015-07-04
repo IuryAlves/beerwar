@@ -4,13 +4,21 @@
 		<style>
 		#matrix {
 			background-image: url(/assets/images/bg.jpg);
+			border-spacing: 0;
+			border-collapse: collapse;
 		}
 		#matrix td {
-			width: 80px;
-			height: 80px;
+			width: 60px;
+			height: 60px;
+			text-align: center;
+			vertical-align: bottom;
+			color: #ffffff;
 		}
-		#matrix td.tanque {
-			background-image: url(/assets/images/tanque.png)
+		#matrix td.tank {
+			background-image: url(/assets/images/tanque.png);
+		}
+		#matrix td.barrier {
+			background-image: url(/assets/images/barrier.png);
 		}
 
 		</style>
@@ -36,17 +44,25 @@
 		                                    var e = x.length;
 						    for(var n = 0; n<=e;n++){
 							// td
-							    if(x[n] != '_' && x[n] != '#') {
-							    	tdclass = 'tanque';
+							    if(x[n] == '_') {
+							    	tdclass = '';
+							    	text = '&nbsp;';
+							    } else if(x[n] == '#'){
+							    	tdclass = 'barrier';
+							    	text = '&nbsp;';
+							    } else {
+							    	tdclass = 'tank';
+							    	text = x[n];
 							    }
-							    tr.append($('<td class="' + tdclass + '">').html(x[n]));
+
+							    tr.append($('<td class="' + tdclass + '">').html(text));
 							}
 						  }
 					  }
 					})
 				};
 				ajax();
-				//setInterval(ajax, 1000);
+				setInterval(ajax, 1000);
 			});
 		</script>
 	</body>
