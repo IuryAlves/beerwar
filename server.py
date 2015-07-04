@@ -58,7 +58,7 @@ barriers = [
     {
         'x': 1,
         'y': 1,
-        'life': 3,
+        'level': 3,
     }
 ]
 
@@ -75,7 +75,7 @@ my = 25
 
 def _matrix():
     global players
-    
+
     if len(players) == 0:
         players = {}
     background = [['_'] * mx for i in range(my)]
@@ -110,7 +110,11 @@ def valid_position(position):
         if barrier['x'] == position[0] and barrier['y'] == position[1]:
             return False
     if valid_extent(position):
-        return not by_position(position)
+        p = by_position(position)
+        if p:
+            return not p['life']
+        else:
+            return True            
     return False
 
 
@@ -203,18 +207,19 @@ def shoot(direction):
     while valid_extent(previous_position):
         shoot_position = get_position_shot(previous_position, direction)
         target_player = by_position(shoot_position)
-        if target_player:
+        if target_player and target_player['life']:
             target_player['life'] = False
+            barriers.append({'x': target_player['matrix'][0], 'y': target_player['matrix'][1], 'level': 3})
             return "headshot in {}!".format(target_player.get("name"))
             break
         target_barrier = barrier_colide(shoot_position)
         if target_barrier is not None:
-            if barriers[target_barrier]['life'] <= 0:
+            if barriers[target_barrier]['level'] <= 0:
                 del barriers[target_barrier]
                 return 'Barrier destroyed'
             else:
-                barriers[target_barrier]['life'] -= 1
-                return 'Barrier shot'
+                barriers[target_barrier]['level'] -= 1
+                return 'Barrier shot remaning %s' % (barriers[target_barrier]['level'] + 1)
 
         previous_position = shoot_position
 
