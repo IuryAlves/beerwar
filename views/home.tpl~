@@ -1,0 +1,21 @@
+<html>
+	<head>
+		<script src="https://code.jquery.com/jquery-1.9.1.min.js"></script>
+	</head>
+	<body>
+		<table id="matrix"></table>
+		<script>
+			$(document).ready(function() {
+				$.ajax({
+				  url: "/matrix/",
+				}).done(function(r) {
+				  j = JSON.parse(r);
+				  for(var i = 0; i < n; i++){
+				  }
+				  $("#matrix").append($('<tr>'))
+				  console.log(j);
+				});
+			});
+		</script>
+	</body>
+</html>
