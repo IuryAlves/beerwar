@@ -1,6 +1,27 @@
 <html>
 	<head>
 		<script src="/assets/jquery-1.3.2.min.js"></script>
+		<style>
+		#matrix {
+			background-image: url(/assets/images/bg.jpg);
+			border-spacing: 0;
+			border-collapse: collapse;
+		}
+		#matrix td {
+			width: 60px;
+			height: 60px;
+			text-align: center;
+			vertical-align: bottom;
+			color: #ffffff;
+		}
+		#matrix td.tank {
+			background-image: url(/assets/images/tanque.png);
+		}
+		#matrix td.barrier {
+			background-image: url(/assets/images/barrier.png);
+		}
+
+		</style>
 	</head>
 	<body>
 		<table id="matrix"></table>
@@ -13,6 +34,7 @@
 					  success: function(r){
 						  matrix = $("#matrix");
 						  matrix.html("");
+						  tdclass = '';
 						  j = JSON.parse(r);
 						  var w = j.length;
 						  for(var i = 0; i<=w;i++){
@@ -22,7 +44,18 @@
 		                                    var e = x.length;
 						    for(var n = 0; n<=e;n++){
 							// td
-							    tr.append($("<td>").html(x[n]));
+							    if(x[n] == '_') {
+							    	tdclass = '';
+							    	text = '&nbsp;';
+							    } else if(x[n] == '#'){
+							    	tdclass = 'barrier';
+							    	text = '&nbsp;';
+							    } else {
+							    	tdclass = 'tank';
+							    	text = x[n];
+							    }
+
+							    tr.append($('<td class="' + tdclass + '">').html(text));
 							}
 						  }
 					  }
