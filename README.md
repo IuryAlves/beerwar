@@ -14,9 +14,9 @@ Python war game server
 ## API
 
 - `/imalive/` POST (name: 'w', direction: 'u')
-- `/point/<direction>` POST
+- `/turn/<direction>` POST
 - `/goto/<direction>` POST
-- `/junp/<direction>` POST
+- `/jump/<direction>` POST
 - `/shoot/<direction>/` POST
 
 ### Direction

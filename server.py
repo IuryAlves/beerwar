@@ -197,8 +197,8 @@ def jump(direction):
     return goto(direction, True)
 
 
-@route('/point/<direction>/', method="POST")
-def point(direction):
+@route('/turn/<direction>/', method="POST")
+def turn(direction):
     player = players[request.remote_addr]
     m = player['matrix']
     player['matrix'] = [m[0], m[1], direction]
