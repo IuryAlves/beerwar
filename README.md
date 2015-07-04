@@ -3,7 +3,7 @@ Python war game server
 
 ## Install
 
-    pip install bottle
+    pip install -r requirements.txt
 
 
 ## Run
