@@ -81,7 +81,7 @@ def _matrix():
     background = [['_'] * mx for i in range(my)]
     for player in players:
         if players[player].get('life'):
-            background[players[player].get('matrix')[0]][players[player].get('matrix')[1]] = players[player].get('name')
+            background[players[player].get('matrix')[0]][players[player].get('matrix')[1]] = "{}|{}".format(players[player].get('name'), players[player].get('matrix')[2])
 
     for barrier in barriers:
         background[barrier['x']][barrier['y']] = '#'
@@ -177,6 +177,11 @@ def get_position_shot(position, direction):
 @route('/goto/<direction>/', method="POST")
 def goto(direction, jump=False):
     player = players[request.remote_addr]
+
+    # if not set point direction position
+    if player.get('matrix')[2] != direction:
+        return {"invalid action": True}
+
     new_position = get_position(player['matrix'], direction, jump)
     if new_position != player['matrix']:
         player['matrix'] = new_position
@@ -192,6 +197,17 @@ def jump(direction):
     return goto(direction, True)
 
 
+@route('/point/<direction>/', method="POST")
+def point(direction):
+    player = players[request.remote_addr]
+    m = player['matrix']
+    player['matrix'] = [m[0], m[1], direction]
+
+    matrix = _matrix()
+    pprint.pprint(matrix)
+    return {"ok": True}
+
+
 def barrier_colide(shoot_position):
     for i, barrier in enumerate(barriers):
         if barrier['x'] == shoot_position[0] and barrier['y'] == shoot_position[1]:
@@ -202,6 +218,11 @@ def barrier_colide(shoot_position):
 @route('/shoot/<direction>/', method='POST')
 def shoot(direction):
     player = players[request.remote_addr]
+
+    # if not set point direction position
+    if player.get('matrix')[2] != direction:
+        return {"invalid action": True}
+
     position = player['matrix'][:]
     previous_position = position[:]
     while valid_extent(previous_position):
@@ -251,9 +272,10 @@ def im_alive():
 
     x = random.randrange(mx)
     y = random.randrange(my)
-    players[request.remote_addr] = {'name': request.POST.get('name'),
-                                    "matrix": [x, y],
-                                    "life": True}
+    players[request.remote_addr] = {
+        'name': request.POST.get('name'),
+        "matrix": [x, y, request.POST.get('direction', 'u')],
+        "life": True}
 
     matrix = _matrix()
     pprint.pprint(matrix)
