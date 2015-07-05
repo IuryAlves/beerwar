@@ -17,6 +17,34 @@
 		#matrix td.tank {
 			background-image: url(/assets/images/tanque.png);
 		}
+		#matrix td.u {
+			-webkit-transform: rotate(0deg);
+			-moz-transform: rotate(0deg);
+			-ms-transform: rotate(0deg);
+			-o-transform: rotate(0deg);
+			transform: rotate(0deg);
+		}
+		#matrix td.r {
+			-webkit-transform: rotate(90deg);
+			-moz-transform: rotate(90deg);
+			-ms-transform: rotate(90deg);
+			-o-transform: rotate(90deg);
+			transform: rotate(90deg);
+		}
+		#matrix td.d {
+			-webkit-transform: rotate(180deg);
+			-moz-transform: rotate(180deg);
+			-ms-transform: rotate(180deg);
+			-o-transform: rotate(180deg);
+			transform: rotate(180deg);
+		}
+		#matrix td.l {
+			-webkit-transform: rotate(270deg);
+			-moz-transform: rotate(270deg);
+			-ms-transform: rotate(270deg);
+			-o-transform: rotate(270deg);
+			transform: rotate(270deg);
+		}
 		#matrix td.barrier {
 			background-image: url(/assets/images/barrier.png);
 		}
@@ -50,9 +78,12 @@
 							    } else if(x[n] == '#'){
 							    	tdclass = 'barrier';
 							    	text = '&nbsp;';
+							    } else if(x[n] == undefined){
+							    	
 							    } else {
-							    	tdclass = 'tank';
-							    	text = x[n];
+							    	tdclass = 'tank ';
+							    	text = x[n].split('|')[0];
+							    	tdclass += x[n].split('|')[1];
 							    }
 
 							    tr.append($('<td class="' + tdclass + '">').html(text));
